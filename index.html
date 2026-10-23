@@ -67,16 +67,16 @@
         margin-right: 8px;
       }
 
-      /* HEADER — images/AB1.png */
+      /* HEADER — images/AB1.avif */
       header {
         background-color: var(--bg-secondary);
         background-image:
           linear-gradient(
             to bottom,
-            rgba(0, 0, 45, 0.88),
-            rgba(18, 20, 34, 0.96)
+            rgba(0, 0, 45, 0.45),
+            rgba(18, 20, 34, 0.7)
           ),
-          url("images/AB1.png");
+          url("images/AB1.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -212,17 +212,17 @@
         font-size: 0.95rem;
       }
 
-      /* EARN CARD — images/AB4.png */
+      /* EARN CARD — images/AB4.avif */
       #earn-section {
         background-color: transparent !important;
         border: 1px solid var(--silver);
         background-image:
           radial-gradient(
             circle at center,
-            rgba(22, 24, 39, 0.85) 0%,
-            rgba(22, 24, 39, 0.95) 100%
+            rgba(22, 24, 39, 0.62) 0%,
+            rgba(22, 24, 39, 0.86) 100%
           ),
-          url("images/AB4.png");
+          url("images/AB4.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -235,7 +235,7 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
       }
 
-      /* STANDALONE CARD — images/AB3.png */
+      /* STANDALONE CARD — images/AB3.avif */
       .standalone-card {
         margin-top: calc(var(--spacing-unit) * 2);
         width: 100%;
@@ -250,8 +250,8 @@
         align-items: center;
         background-color: var(--bg-secondary);
         background-image:
-          linear-gradient(rgba(0, 0, 50, 0.92), rgba(10, 12, 30, 0.96)),
-          url("images/AB3.png");
+          linear-gradient(rgba(0, 0, 50, 0.62), rgba(10, 12, 30, 0.8)),
+          url("images/AB3.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -465,7 +465,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      /* LEVEL DISPLAY — images/AB2.png */
+      /* LEVEL DISPLAY — images/AB2.avif */
       #level-display {
         margin-top: 2rem;
         padding: 2rem;
@@ -483,8 +483,8 @@
         align-items: center;
         background-color: var(--bg-secondary);
         background-image:
-          linear-gradient(rgba(0, 0, 55, 0.86), rgba(10, 12, 28, 0.94)),
-          url("images/AB2.png");
+          linear-gradient(rgba(0, 0, 55, 0.5), rgba(10, 12, 28, 0.72)),
+          url("images/AB2.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -593,8 +593,8 @@
         background-color: transparent !important;
         border: 1px solid var(--silver);
         background-image:
-          linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
-          url("images/AB5.png");
+          linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.78)),
+          url("images/AB5.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -738,8 +738,8 @@
         background-color: transparent !important;
         border: 1px solid var(--silver);
         background-image:
-          linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.92)),
-          url("images/AB6.png");
+          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.78)),
+          url("images/AB6.avif");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -1029,18 +1029,14 @@
         );
       }
       h1 {
-        background: linear-gradient(
-          90deg,
-          var(--warm-yellow),
-          var(--text-secondary)
-        );
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: var(--text-secondary);
+        /* Solid colour: renders the same in every browser */
+        color: var(--warm-yellow);
         letter-spacing: 0.08em;
         text-transform: uppercase;
         font-size: 2.2rem;
+        text-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.7),
+          0 0 18px rgba(244, 233, 140, 0.25);
       }
       p.subtitle {
         letter-spacing: 0.04em;
@@ -1837,6 +1833,370 @@
         from { opacity: 0; transform: translateY(18px); }
         to { opacity: 1; transform: translateY(0); }
       }
+
+      /* ===== Mobile responsive (tuned for 320-480px, incl. 360px) ===== */
+      html, body { max-width: 100%; }
+      body { overflow-x: hidden; }
+      img, svg { max-width: 100%; }
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      }
+      @media (max-width: 768px) {
+        .svg-placeholder img { max-width: 170px; height: auto; margin: 0 auto; }
+      }
+      @media (max-width: 480px) {
+        header { padding: 1.2rem 0.75rem 1rem; }
+        h1 { font-size: 1.55rem; letter-spacing: 0.04em; overflow-wrap: anywhere; }
+        p.subtitle { font-size: 0.85rem; }
+        nav.main-nav { gap: 0.4rem 0.9rem; }
+        nav.main-nav a { font-size: 0.85rem; }
+        .container { padding: 0.75rem; }
+        .demo-banner { font-size: 0.78rem; padding: 0.6rem 0.5rem; }
+
+        #level-display { padding: 1.1rem 0.8rem; gap: 1rem; margin-top: 1rem; }
+        .level-info h2 { font-size: 19px; line-height: 1.35; }
+        #levelStatus { font-size: 17px; }
+        .progress-container { width: 96%; height: 16px; }
+        .xp-text { font-size: 0.9rem; }
+        .xp-detail { font-size: 0.85rem; }
+        .reward-card { width: 100%; gap: 0.7rem; padding: 0.65rem 0.7rem; }
+        .reward-icon { width: 44px; height: 44px; font-size: 1.3rem; }
+        .reward-lock { width: 20px; height: 20px; font-size: 0.65rem; }
+        .reward-amount { font-size: 1.35rem; }
+        .reward-sub { font-size: 0.76rem; }
+        .xp-reward { font-size: 0.82rem; }
+
+        .card { padding: 1rem 0.8rem; }
+        .card h3 { font-size: 19px; }
+        .level-progression-grid { gap: 0.55rem; }
+        .level-progression-grid .level-img-box { max-width: 84px; padding: 0.35rem; }
+        .level-name { font-size: 0.74rem; }
+        .level-num { font-size: 0.6rem; }
+        .state-pill {
+          font-size: 0.54rem;
+          padding: 0.15rem 0.4rem;
+          white-space: normal;
+          text-align: center;
+          line-height: 1.15;
+        }
+        .progression-note { font-size: 0.8rem; }
+
+        #earnGrid { gap: 0.75rem; }
+        .earn-card { padding: 0.85rem; }
+        .earn-card h4 { font-size: 0.95rem; }
+        .earn-cta { padding: 0.7rem 0.8rem; font-size: 0.85rem; }
+
+        .game-area { gap: 0.5rem; padding: 0.6rem 0.4rem; }
+        .lucky-box { width: 68px; height: 68px; }
+        .lucky-box i { font-size: 1.6rem; }
+        .cooldown-timer { font-size: 0.8rem; }
+
+        .activity-summary { padding: 0.55rem 0.7rem; }
+        .activity-summary .total { font-size: 1.15rem; }
+        .activity-item { gap: 0.55rem; padding: 0.5rem 0.55rem; }
+        .activity-icon { width: 30px; height: 30px; font-size: 0.85rem; }
+        .activity-details { min-width: 0; flex: 1; }
+        .activity-source { font-size: 0.88rem; overflow-wrap: anywhere; }
+        .activity-time { font-size: 0.72rem; }
+        .activity-xp { font-size: 0.78rem; padding: 0.12rem 0.45rem; white-space: nowrap; }
+
+        .toast {
+          max-width: calc(100vw - 1.5rem);
+          width: max-content;
+          white-space: normal;
+          text-align: center;
+          border-radius: 14px;
+          padding: 0.65rem 0.9rem;
+          font-size: 0.85rem;
+          bottom: 70px;
+        }
+      }
+      @media (max-width: 360px) {
+        h1 { font-size: 1.4rem; }
+        .level-info h2 { font-size: 17px; }
+        #levelStatus { font-size: 16px; }
+        .reward-amount { font-size: 1.2rem; }
+        .lucky-box { width: 62px; height: 62px; }
+        .level-progression-grid .level-img-box { max-width: 76px; }
+      }
+
+      /* ===== Mobile: stop content from being wider than the screen ===== */
+      html { -webkit-text-size-adjust: 100%; }
+      .container,
+      .grid > *,
+      .card,
+      .card > *,
+      #level-display > *,
+      .standalone-card > *,
+      .level-info > *,
+      .level-item,
+      .earn-card,
+      .game-area > * {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .level-info h2,
+      .level-info p,
+      .reward-sub,
+      .earn-desc,
+      .activity-source {
+        overflow-wrap: anywhere;
+      }
+      .tooltip-text { pointer-events: none; max-width: 80vw; }
+      .level-progression-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      #earnGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @media (max-width: 768px) {
+        #level-display { grid-template-columns: minmax(0, 1fr); }
+      }
+      @media (max-width: 640px) {
+        .standalone-card { grid-template-columns: minmax(0, 1fr); }
+      }
+      @media (max-width: 480px) {
+        #earnGrid { grid-template-columns: minmax(0, 1fr); }
+        .container { padding: 0.75rem 0.6rem; }
+        #level-display,
+        .standalone-card,
+        .card {
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+        }
+        .game-area {
+          flex-wrap: nowrap;
+          justify-content: space-evenly;
+          gap: 0.4rem;
+          padding: 0.6rem 0.3rem;
+        }
+        .lucky-box {
+          width: clamp(54px, 19vw, 68px);
+          height: auto;
+          aspect-ratio: 1 / 1;
+          flex: 0 1 auto;
+        }
+        .tooltip-text { width: 220px; margin-left: -110px; }
+      }
+
+      /* Tooltip: keep it inside the screen on phones/tablets */
+      @media (max-width: 768px) {
+        .tooltip-text,
+        .info-icon:hover .tooltip-text {
+          left: auto;
+          right: -6px;
+          margin-left: 0;
+          width: min(240px, calc(100vw - 2.5rem));
+          max-width: none;
+          transform: none;
+        }
+        .tooltip-text::after {
+          left: auto;
+          right: 10px;
+          margin-left: 0;
+        }
+      }
+
+      /* ===== Desktop / tablet layout ===== */
+      @media (min-width: 769px) {
+        #appRoot.container {
+          max-width: 1180px;
+          margin: 0 auto;
+          padding: 1.5rem 1.5rem 3rem;
+        }
+        #level-display,
+        .standalone-card {
+          max-width: none;
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+        }
+        #level-display {
+          grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+          padding: 2.2rem 2.5rem;
+          gap: 2rem;
+        }
+        .level-info h2 { font-size: 28px; }
+        #levelStatus { font-size: 24px; }
+        .progress-container { width: 92%; }
+        .svg-placeholder img {
+          width: 100%;
+          max-width: 250px;
+          height: auto;
+          margin: 0 auto;
+        }
+        .standalone-card {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+          padding: 2rem 2.5rem;
+          gap: 2.5rem;
+        }
+        .level-progression-grid {
+          max-width: 540px;
+          margin: 0 auto;
+          gap: 1.2rem 1.5rem;
+        }
+        .grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
+        .activity-list {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.5rem 1rem;
+          max-height: 420px;
+        }
+        .activity-list .activity-item { margin-bottom: 0; }
+      }
+      @media (min-width: 960px) {
+        .grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+        .full-width-card { grid-column: 1 / -1; }
+      }
+
+      /* ===== Hero heading, level path, level rewards, reward tooltip ===== */
+      .hero-eyebrow {
+        margin: 0 0 0.35rem;
+        color: var(--warm-yellow);
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      }
+      .level-path {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.9rem;
+        margin: 0.9rem 0 0.2rem;
+      }
+      .path-stop {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.1rem;
+        min-width: 86px;
+        padding: 0.5rem 0.8rem;
+        border-radius: 12px;
+        border: 1px solid var(--silver);
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      .path-stop img {
+        width: 44px;
+        height: auto;
+      }
+      .path-stop.current {
+        border-color: var(--text-secondary);
+        box-shadow: 0 0 14px rgba(210, 175, 38, 0.45);
+      }
+      .path-stop.next {
+        border: 1px dashed var(--warm-yellow);
+      }
+      .path-stop.next img {
+        opacity: 0.85;
+      }
+      .path-level {
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .path-caption {
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--silver);
+      }
+      .path-stop.current .path-caption {
+        color: var(--text-secondary);
+      }
+      .path-stop.next .path-caption {
+        color: var(--warm-yellow);
+      }
+      .path-arrow {
+        color: var(--warm-yellow);
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-shadow: 0 0 10px rgba(244, 233, 140, 0.6);
+        animation: arrowNudge 1.6s ease-in-out infinite;
+      }
+      @keyframes arrowNudge {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(5px); }
+      }
+
+      .level-reward {
+        color: var(--warm-yellow);
+        font-size: 0.7rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .state-locked .level-reward {
+        color: var(--silver);
+      }
+      .state-completed .level-reward {
+        color: var(--subtle-green);
+      }
+
+      .earn-remaining {
+        margin: 0 0 0.4rem;
+        color: var(--subtle-green);
+        font-weight: 700;
+        text-align: center;
+        font-size: 1rem;
+      }
+
+      .reward-card {
+        position: relative;
+      }
+      .reward-info {
+        padding: 0 0.15rem;
+        border: none;
+        background: none;
+        color: var(--soft-blue);
+        font-size: 1.05rem;
+        line-height: 1;
+        cursor: pointer;
+        vertical-align: middle;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .reward-info:hover,
+      .reward-info:focus-visible {
+        color: var(--warm-yellow);
+      }
+      .reward-tip {
+        position: absolute;
+        left: 0.5rem;
+        right: 0.5rem;
+        top: calc(100% + 8px);
+        z-index: 20;
+        padding: 0.65rem 0.8rem;
+        border-radius: 10px;
+        border: 1px solid var(--soft-blue);
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        font-size: 0.8rem;
+        font-weight: 400;
+        line-height: 1.4;
+        text-align: left;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .reward-card.tip-open .reward-tip {
+        opacity: 1;
+        visibility: visible;
+      }
+      @media (max-width: 480px) {
+        .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.16em; }
+        .level-path { gap: 0.5rem; }
+        .path-stop { min-width: 0; padding: 0.4rem 0.55rem; }
+        .path-stop img { width: 36px; }
+        .path-level { font-size: 0.82rem; }
+        .path-arrow { font-size: 1.4rem; }
+        .level-reward { font-size: 0.62rem; }
+      }
+
+      #earn-section > p {
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -1860,6 +2220,7 @@
       <!-- LEVEL DISPLAY -->
       <div id="level-display">
         <div class="level-info">
+          <p class="hero-eyebrow">Level Up Your Rewards</p>
           <h2 id="headline"></h2>
           <h2 id="levelStatus"></h2>
           <div class="progress-container">
@@ -1872,6 +2233,7 @@
           <p class="xp-detail" id="milestoneText"></p>
           <div class="reward-card" id="rewardText"></div>
           <p class="xp-reward" id="claimText"></p>
+          <div class="level-path" id="levelPath"></div>
         </div>
         <div class="svg-placeholder">
           <img id="currentLevelIcon" src="" alt="Current level icon" />
@@ -1899,7 +2261,8 @@
       <div class="grid">
         <!-- Card 1: Earn more XP (Dynamically populated) -->
         <div class="card" id="earn-section">
-          <h3 class="heading-center">Earn more XP</h3>
+          <h3 class="heading-center">Earn more XP to reach your next level</h3>
+          <p class="earn-remaining" id="earnRemaining"></p>
           <p>Fun activities for exciting rewards</p>
           <div class="icon-grid" id="earnGrid"></div>
         </div>
@@ -1935,9 +2298,6 @@
             >
               0
             </p>
-
-            <h4>Potential Reward</h4>
-            <p id="gameRewardDisplay">Loading...</p>
 
             <h4 style="margin-top: 1rem">How to Play</h4>
             <ul>
@@ -2061,8 +2421,7 @@
             },
             // NEW: Game specific stats
             gameStats: {
-              score: 1250,
-              reward: { type: "Coins", amount: 100 },
+              score: 0, // total XP won in Lucky Box (saved between visits)
             },
             // NEW: XP History for the activity feed
             xpHistory: [
@@ -2525,6 +2884,54 @@
           document.getElementById("milestoneText").textContent = maxed
             ? "👑 You have reached the top level - welcome to the legends!"
             : fillTemplate(t.milestoneLine, tokens);
+          // Remaining XP line above the earning cards
+          var earnRem = document.getElementById("earnRemaining");
+          if (earnRem) {
+            earnRem.textContent = maxed
+              ? "You have reached the top level!"
+              : fillTemplate(t.milestoneLine, tokens);
+          }
+
+          // Current -> Next level path
+          var pathEl = document.getElementById("levelPath");
+          if (pathEl) {
+            pathEl.textContent = "";
+            var pad2 = function (n) {
+              return (n < 10 ? "0" : "") + n;
+            };
+            var addStop = function (levelNum, caption, cls) {
+              var entry = cfg.levels.filter(function (l) {
+                return l.level === levelNum;
+              })[0];
+              var stop = document.createElement("div");
+              stop.className = "path-stop " + cls;
+              if (entry && entry.icon) {
+                var pi = document.createElement("img");
+                pi.src = entry.icon;
+                pi.alt = "";
+                stop.appendChild(pi);
+              }
+              var pl = document.createElement("span");
+              pl.className = "path-level";
+              pl.textContent = "Level " + pad2(levelNum);
+              stop.appendChild(pl);
+              var pc = document.createElement("span");
+              pc.className = "path-caption";
+              pc.textContent = caption;
+              stop.appendChild(pc);
+              pathEl.appendChild(stop);
+            };
+            addStop(p.currentLevel, "Current", "current");
+            if (!maxed) {
+              var arrow = document.createElement("span");
+              arrow.className = "path-arrow";
+              arrow.setAttribute("aria-hidden", "true");
+              arrow.textContent = "\u2192";
+              pathEl.appendChild(arrow);
+              addStop(p.nextLevel, "Next", "next");
+            }
+          }
+
           var rewardEl = document.getElementById("rewardText");
           rewardEl.textContent = "";
           rewardEl.className = "reward-card" + (maxed ? " unlocked" : "");
@@ -2542,8 +2949,17 @@
           rBody.className = "reward-body";
           var rLabel = document.createElement("span");
           rLabel.className = "reward-label";
-          rLabel.textContent = maxed ? "All rewards unlocked" : "Next Reward";
+          rLabel.textContent = maxed ? "All rewards unlocked" : "Next Level Reward";
           rBody.appendChild(rLabel);
+          if (!maxed) {
+            var tip = document.createElement("button");
+            tip.type = "button";
+            tip.className = "reward-info";
+            tip.setAttribute("aria-label", "About the next level reward");
+            tip.textContent = "\u24d8";
+            rLabel.appendChild(document.createTextNode(" "));
+            rLabel.appendChild(tip);
+          }
           if (!maxed) {
             var rAmount = document.createElement("span");
             rAmount.className = "reward-amount";
@@ -2559,6 +2975,27 @@
           rBody.appendChild(rSub);
           rewardEl.appendChild(rIcon);
           rewardEl.appendChild(rBody);
+          if (!maxed) {
+            var tipText = document.createElement("div");
+            tipText.className = "reward-tip";
+            tipText.setAttribute("role", "tooltip");
+            tipText.textContent =
+              "The displayed reward is associated with the next level according to the current reward configuration.";
+            rewardEl.appendChild(tipText);
+            var tipBtn = rewardEl.querySelector(".reward-info");
+            tipBtn.addEventListener("click", function () {
+              rewardEl.classList.toggle("tip-open");
+            });
+            tipBtn.addEventListener("mouseenter", function () {
+              rewardEl.classList.add("tip-open");
+            });
+            tipBtn.addEventListener("mouseleave", function () {
+              rewardEl.classList.remove("tip-open");
+            });
+            tipBtn.addEventListener("blur", function () {
+              rewardEl.classList.remove("tip-open");
+            });
+          }
 
           document.getElementById("claimText").textContent = maxed ? "" : t.claimLine;
 
@@ -2629,6 +3066,24 @@
             }
             item.appendChild(caption);
 
+            var rm = (cfg.levelRoadmap || []).filter(function (r) {
+              return r.level === lvl.level;
+            })[0];
+            if (rm && rm.reward) {
+              var lr = document.createElement("span");
+              lr.className = "level-reward";
+              var lrIcon = document.createElement("i");
+              lrIcon.className = "fa fa-gift";
+              lrIcon.setAttribute("aria-hidden", "true");
+              lr.appendChild(lrIcon);
+              lr.appendChild(
+                document.createTextNode(
+                  " +" + rm.reward.amount + " " + rm.reward.type,
+                ),
+              );
+              item.appendChild(lr);
+            }
+
             var pill = document.createElement("span");
             pill.className = "state-pill";
             var pillIcon = document.createElement("i");
@@ -2654,10 +3109,6 @@
           if (cfg.gameStats) {
             document.getElementById("gameScoreDisplay").textContent =
               numberWithCommas(cfg.gameStats.score);
-            var rewardTxt =
-              cfg.gameStats.reward.amount + " " + cfg.gameStats.reward.type;
-            document.getElementById("gameRewardDisplay").textContent =
-              rewardTxt;
           }
 
           // NEW: Earning Opportunities Grid
@@ -3054,6 +3505,11 @@
                 },
               );
             }, 1000);
+            // Update the running Game Score (saved so it survives a reload)
+            if (activeConfig.gameStats) {
+              activeConfig.gameStats.score += xp;
+              storage.set(SCORE_KEY, String(activeConfig.gameStats.score));
+            }
             logActivity("Lucky Box", xp, "fa-gift");
             showToast("🎉 Congratulations! You won " + xp + " XP!");
           }, 900);
@@ -3064,6 +3520,7 @@
            ============================================================ */
         var STORAGE_KEY = "luckyBoxLastPlay";
         var XP_BONUS_KEY = "luckyBoxXPBonus"; // total XP won from Lucky Box
+        var SCORE_KEY = "luckyBoxScore"; // saved Game Score
         var ACTIVITY_KEY = "luckyBoxActivity"; // saved activity feed entries (JSON)
         var COOLDOWN_MS = 24 * 60 * 60 * 1000; // Default, overwritten by config later
 
@@ -3110,6 +3567,15 @@
 
         function initGame(cfg) {
           activeConfig = cfg;
+
+          // Restore the saved Game Score
+          var savedScore = parseInt(storage.get(SCORE_KEY), 10);
+          if (!cfg.gameStats) cfg.gameStats = { score: 0 };
+          if (!isNaN(savedScore) && savedScore > 0) {
+            cfg.gameStats.score = savedScore;
+          }
+          document.getElementById("gameScoreDisplay").textContent =
+            numberWithCommas(cfg.gameStats.score);
 
           // Restore XP won in earlier sessions and refresh the XP displays
           var savedBonus = parseInt(storage.get(XP_BONUS_KEY), 10);
