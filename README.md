@@ -12,7 +12,21 @@ VeLooper shows a user's reward progress at a glance:
 - A **level progression** panel with all nine levels, their state (completed, current, next, locked) and the XP reward for each.
 - **Earning feature cards** that show how to earn more XP.
 - A **Lucky Box** mini game that awards random XP once every 24 hours.
+- A **Daily Puzzle** mini game (sliding tiles) that awards XP once per day with a premium reward reveal.
 - A **Recent XP Activity** feed with a running Session Total.
+
+Custom **illustrations** explain each feature: a glowing XP orb, a reward chest, a character climbing a reward tower that follows the player's level, a character with each mini game, and XP coins flowing into a wallet.
+
+**Interactions:**
+
+- **Earn XP to level up** button (end of the Level Progression text) smoothly scrolls to the *Earn more XP* card and flashes it.
+- **Level details:** tap or press Enter on any level to see its name, XP target, reward and how many XP are still needed. It starts on the current level.
+- **Nav links** (Home, Level Progression, Earn, Lucky Box, Puzzle, Activity) scroll smoothly to their section, and the link for the section in view is highlighted as you scroll. On phones "Level Progression" shortens to "Levels" so all six fit on one row. On very narrow screens (about 320px) the row scrolls sideways and keeps the active link in view.
+- **Play Games** card (unlocked at Level 2) jumps to the Lucky Box.
+- **Daily Puzzle:** tap a tile, or use the arrow keys, to slide it into the gap.
+- **Play & earn XP** hero button jumps to the Lucky Box.
+- **Earning card previews:** hover a card (or focus it, or tap on touch screens) to see a short "What's involved" list. Tap or hover away to return.
+- **Next Level Reward** ⓘ opens an explanation on hover, focus or tap.
 
 The page runs in **demo mode** by default. It uses built-in dummy data, and a banner reads "Development Mode: Showing dummy data". It can also load live data from `/api/rewards/me` (see [Installation](#installation)).
 
@@ -62,6 +76,7 @@ At **Level 9** the hero shows a "Max Level reached" message instead of a next ta
 | `luckyBoxXPBonus` | Total XP earned in Lucky Box plus level rewards |
 | `luckyBoxScore` | The Lucky Box Game Score |
 | `luckyBoxActivity` | The 25 most recent activity feed entries |
+| `dailyPuzzleState` | Today's Daily Puzzle: date, reward attempts used and today's result |
 
 To reset the demo, clear these keys in your browser's developer tools (Application → Local Storage).
 
@@ -83,6 +98,21 @@ To reset the demo, clear these keys in your browser's developer tools (Applicati
 
 The panel also shows a **Current Game Score**. It starts at 0 and grows with every win.
 
+### Daily Puzzle
+
+**Daily Puzzle** is a 3×3 sliding-tile puzzle. The player slides tiles 1–8 into order against a 90-second timer. The faster and more efficiently they solve it, the higher the score and the bigger the XP reward. The card explains the game in seven info panels: How to Play, Objective, Time & Attempts, Reward, Score, Eligibility and How Often.
+
+The game moves through these states:
+
+| State | What the player sees |
+|---|---|
+| Start | Overlay with the offer, the attempts left today and a **Start Puzzle** button |
+| Gameplay | Live Time, Moves and Score, a "tiles in place" progress bar, and tappable tiles (those next to the gap glow) |
+| Completion | The board locks as soon as the last tile lands |
+| Reward result | A premium reveal: spinning ring, medal pop, spark burst, counting XP and 1–3 stars |
+| Time's up | Message with attempts left, and **Try Again** if one remains |
+| Locked / replay | Today's result and a countdown to the next reward, plus **Practice (no XP)** |
+
 ---
 
 ## Game Rules
@@ -95,22 +125,39 @@ The panel also shows a **Current Game Score**. It starts at 0 and grows with eve
 
 The prize range and cooldown are set in the config (`luckyBox.minXP`, `luckyBox.maxXP`, `luckyBox.cooldownHours`).
 
+### Daily Puzzle rules
+
+| Rule | Detail |
+|---|---|
+| Objective | Order tiles 1–8, with the empty space in the bottom-right corner |
+| Time limit | 90 seconds per attempt |
+| Attempts | 2 reward attempts per day |
+| Score | Starts at 1,000, minus 6 per move and 2 per second (minimum 100) |
+| Reward | Gold (750+) = **+100 XP**, Silver (500+) = **+60 XP**, Bronze (under 500) = **+30 XP** |
+| Eligibility | Every player at any level. Only a solved puzzle earns XP. |
+| Frequency | One reward per day, resetting at local midnight |
+| Practice | Unlimited, but earns no XP and doesn't use a reward attempt |
+
+Every shuffle is made by playing legal moves backwards from the solved board, so each puzzle can always be solved. The values are constants near the top of the Daily Puzzle code (`PZ_TIME`, `PZ_ATTEMPTS`, `pzTier()`, `pzScoreNow()`).
+
+The reward goes through the same path as Lucky Box wins: it is added to the player's XP, can trigger a level-up and its level reward, and appears in the activity feed as "Daily Puzzle". It is prototype logic that runs entirely in the browser with local state. No backend is involved.
+
 ---
 
 ## Earning Features
 
-Six earning cards sit below the progression panel. Each shows the XP you can earn, a one-line description and a call-to-action button.
+Daily Puzzle and Lucky Box are the two playable games (see above). Six earning cards sit below the progression panel. Each shows the XP you can earn, a one-line description and a call-to-action button.
 
 | Feature | Earn up to | Status |
 |---|---|---|
 | Watch Ads | +50 XP | Available |
 | Refer Friends | +100 XP | Available |
 | Daily Tasks | +25 XP | Available |
-| Play Games | +75 XP | Unlocks at Level 5 |
-| Bonus Missions | +200 XP | Coming soon (marked **Best Value**) |
+| Play Games | +200 XP | Unlocks at Level 2 (marked **Best Value**) |
+| Bonus Missions | +200 XP | Coming soon |
 | Streak XP | +30 XP | Locked |
 
-Cards are colored by value: **blue** for low XP, **green** for medium and **yellow** for high. Available cards lift on hover. Locked cards are dimmed with a disabled button. For now the buttons show a toast message only. Connect them to real actions in your own app.
+Cards are colored by value: **blue** for low XP, **green** for medium and **yellow** for high. The **Best Value** ribbon goes to the first card with the highest XP. Available cards lift on hover. Locked cards are dimmed with a disabled button. For now the buttons show a toast message only. Connect them to real actions in your own app.
 
 ---
 
@@ -121,6 +168,8 @@ Cards are colored by value: **blue** for low XP, **green** for medium and **yell
 - **Vanilla JavaScript (ES5 style)**: no framework or bundler.
 - **Font Awesome 4.7**: icons, loaded from the cdnjs CDN.
 - **Browser `localStorage`**: persistence.
+- **Animated WebP** logo (converted from the original 800 KB GIF to about 68 KB).
+- **SVG illustrations** drawn for this project (`illustrations/`), using the page palette and a shared mascot character.
 - **AVIF** card backgrounds (`images/AB1.avif` to `AB6.avif`) and **SVG** level badges. AVIF is supported by current Chrome, Edge, Firefox and Safari (16.4+).
 
 ---
@@ -172,7 +221,15 @@ VELOOP/
 │   ├── AB3.avif    # Level progression card: glowing hex grid
 │   ├── AB4.avif    # Earn more XP card: confetti and coin bokeh
 │   ├── AB5.avif    # Lucky Box card: golden sparkle burst
-│   └── AB6.avif    # Recent XP Activity card: data streams
+│   ├── AB6.avif    # Recent XP Activity card: data streams
+│   └── Animation-VELoop.webp   # Animated VELoop logo in the header (about 68 KB, links to velooprewards.in)
+├── illustrations/  # Feature illustrations (SVG)
+│   ├── xp-orb.svg          # Glowing XP orb: hero, next to the level badge
+│   ├── reward-chest.svg    # Locked premium chest: Next Level Reward card
+│   ├── lucky-box-game.svg  # Character inviting you to pick a box: Lucky Box
+│   ├── puzzle-game.svg     # Character sliding a puzzle tile: Daily Puzzle
+│   └── coins-wallet.svg    # XP coins flowing into a wallet: Earn more XP
+│                           # (the level tower is drawn inline in index.html, see below)
 ├── 1.svg … 9.svg   # Level badges (Level 1 to Level 9)
 └── 10.svg          # Extra badge (not used by the page)
 ```
@@ -187,10 +244,11 @@ Everything lives in `index.html`. The script is organized into numbered sections
 2. **Dummy data / config**: `player`, `levelRoadmap`, `levels`, `luckyBox`, `gameStats`, `earningOpportunities`, `xpHistory` and all page `copy`.
 3. **Validation**: `validateConfig()` checks the config before it is rendered.
 4. **Render layer**: `syncLevelToXP()` works out the level from XP, and `renderRewards()` draws the hero, level path, level grid, earning cards and counters.
-5. **Game logic & activity**: opening a box, `applyLevelUps()` (promotion and reward XP), `logActivity()`, the activity feed, the toast and the level-up celebration.
-6. **Init & bootstrap**: restores saved data, starts the cooldown timer and loads the config.
+5. **Interactions**: `scrollToCard()`, `showLevelDetail()` and `initInteractions()` (smooth scroll, level details, nav highlight, puzzle arrow keys).
+6. **Game logic & activity**: opening a box, the **Daily Puzzle** (`pz*` functions: shuffle, move, score, tier, finish, reward reveal),  `applyLevelUps()` (promotion and reward XP), `logActivity()`, the activity feed, the toast and the level-up celebration.
+7. **Init & bootstrap**: restores saved data, starts the cooldown timer and loads the config.
 
-Page sections, top to bottom: demo banner → header and nav → **Level display (hero)** → **Level progression** → **Earn more XP** and **Lucky Box** → **Recent XP Activity** → footer and back-to-top button.
+Page sections, top to bottom: demo banner → compact header (animated logo, title, nav) → **Level display (hero)** → **Level progression** → **Earn more XP** → **Lucky Box** → **Daily Puzzle** → **Recent XP Activity** → footer and back-to-top button.
 
 ---
 
@@ -199,25 +257,33 @@ Page sections, top to bottom: demo banner → header and nav → **Level display
 | Screen | Layout |
 |---|---|
 | Phones (up to 480px, tuned for 360px) | Single column. Hero stacks with the level badge below the text. Earning cards are one per row. Smaller type, Lucky Box and spacing. |
-| Tablets (769–959px) | Hero and progression are two-column. Earn and Lucky Box stack one above the other. |
-| Desktop (960px and up) | Content is centered in a column up to 1,180px wide. Earn (wider) and Lucky Box sit side by side, and the activity feed uses two columns. |
+| Tablets (769px and up) | Every section is one full-width column. Hero and progression are two-column inside their cards; earning cards are two per row. |
+| Desktop (900px and up) | Content is centered in a column up to 1,180px wide. Every section is a single full-width column: earning cards are three per row, Lucky Box puts the game on the left and its rules on the right, the Daily Puzzle board sits beside its seven info panels, and the activity feed uses two columns. |
 
-The page never scrolls sideways. This was checked at 320, 360, 375, 414, 768, 820, 1024 and 1440px.
+The header is kept compact: the animated logo and title share one line, with the subtitle and nav below. The page never scrolls sideways. This was checked at 320, 360, 375, 414, 768, 820, 1024 and 1440px.
 
 ---
 
 ## Animation Details
+
+**Reward tower (dynamic):** the Level Progression tower is an inline SVG that updates with the player's level. Floors below the current level turn green (completed), the current floor turns gold, and higher floors stay locked and purple. The mascot climbs to the current floor when the page loads and climbs again whenever a level-up happens. The dotted trail behind it marks the path already climbed.
 
 | Animation | Where | Details |
 |---|---|---|
 | Progress bar fill | Hero | Fills from 0 over about 1.4 seconds when the page loads, with a soft sheen |
 | XP count-up | Hero | Numbers count from the old value to the new one |
 | Milestone dots | Progress bar | Light up as the bar passes 25%, 50% and 75% |
+| Illustration float | Hero | The XP orb and the reward chest bob gently up and down |
 | Reward card glow | Hero | Slow pulsing glow on the Next Level Reward card |
 | Level path arrow | Hero | Arrow nudges gently between Current and Next |
 | Level-up celebration | Whole page | Confetti and a hero glow when a level is reached |
 | Card entrance | Earning cards | Fade and rise one after another on load |
+| Section flash | Target card | A yellow glow pulses on the section you were scrolled to |
+| Card preview swap | Earning cards | The description fades out and the "What's involved" list slides in, with no change in card size |
 | Hover effects | Cards and buttons | Lift, glow and icon tilt |
+| Puzzle tile hints | Daily Puzzle | Tiles next to the gap glow and grow on hover |
+| Puzzle reward reveal | Daily Puzzle | Medal spins in, a gradient ring rotates, sparks burst, the XP counts up with a gold shimmer and stars pop in one by one |
+| Low-time warning | Daily Puzzle | The timer pulses during the last 15 seconds |
 | Lucky Box idle | Lucky Box | Closed boxes wobble with a twinkling star |
 | Lucky Box open | Lucky Box | Shake, flip open, prize pop and a spark burst |
 | New activity entry | Activity feed | Slides in with a brief highlight |
