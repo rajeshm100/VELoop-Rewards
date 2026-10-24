@@ -2041,10 +2041,7 @@
         }
         .activity-list .activity-item { margin-bottom: 0; }
       }
-      @media (min-width: 960px) {
-        .grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
-        .full-width-card { grid-column: 1 / -1; }
-      }
+
 
       /* ===== Hero heading, level path, level rewards, reward tooltip ===== */
       .hero-eyebrow {
@@ -2197,6 +2194,289 @@
       #earn-section > p {
         text-align: center;
       }
+
+      /* ===== Daily Puzzle ===== */
+      #puzzle-card {
+        background-image: linear-gradient(rgba(0, 0, 50, 0.7), rgba(10, 12, 30, 0.85)), url("images/AB3.avif");
+        background-size: cover;
+        background-position: center;
+      }
+      .puzzle-sub { text-align: center; margin-bottom: 1.2rem; }
+      .puzzle-layout { display: grid; gap: 1.5rem; grid-template-columns: minmax(0, 1fr); }
+      @media (min-width: 900px) {
+        .puzzle-layout { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); align-items: start; }
+      }
+      .puzzle-play { max-width: 420px; width: 100%; margin: 0 auto; }
+      .pz-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.7rem; }
+      .pz-stat {
+        display: flex; flex-direction: column; align-items: center; padding: 0.4rem;
+        border-radius: 10px; border: 1px solid rgba(192, 192, 192, 0.3); background: rgba(0, 0, 0, 0.3);
+      }
+      .pz-stat span { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+      .pz-stat b { font-size: 1.25rem; color: var(--warm-yellow); font-variant-numeric: tabular-nums; }
+      .pz-stat b.warn { color: var(--soft-blue); animation: pzWarn 0.8s ease-in-out infinite; }
+      @keyframes pzWarn { 50% { opacity: 0.4; } }
+      .pz-progress { margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--silver); text-align: center; }
+      .pz-bar { height: 8px; margin-top: 0.3rem; border-radius: 8px; background: rgba(0, 0, 0, 0.5); overflow: hidden; }
+      .pz-bar div { height: 100%; width: 0; border-radius: 8px; transition: width 0.4s ease;
+        background: linear-gradient(90deg, var(--subtle-green), var(--warm-yellow)); }
+      .pz-board-wrap { position: relative; }
+      .pz-board {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; aspect-ratio: 1 / 1; padding: 8px;
+        border-radius: 16px; border: 1px solid var(--muted-purple); background: rgba(0, 0, 0, 0.4);
+      }
+      .pz-board.idle { filter: blur(2px) brightness(0.7); }
+      .pz-tile {
+        display: flex; align-items: center; justify-content: center; border-radius: 12px; font: inherit;
+        font-size: clamp(1.4rem, 7vw, 2.2rem); font-weight: 800; color: var(--text-primary);
+        border: 1px solid var(--soft-blue); cursor: pointer;
+        background: linear-gradient(145deg, rgba(147, 202, 237, 0.3), rgba(128, 91, 135, 0.45));
+        transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+      .pz-tile.blank { background: none; border: 1px dashed rgba(192, 192, 192, 0.25); cursor: default; }
+      .pz-tile.ok { border-color: var(--subtle-green); background: linear-gradient(145deg, rgba(183, 233, 193, 0.35), rgba(147, 202, 237, 0.25)); }
+      .pz-tile.movable:hover { transform: scale(1.06); box-shadow: 0 0 14px rgba(244, 233, 140, 0.5); border-color: var(--warm-yellow); }
+      .pz-tile:active { transform: scale(0.95); }
+      .pz-overlay {
+        position: absolute; inset: 0; display: none; align-items: center; justify-content: center; overflow: auto;
+        border-radius: 16px; background: rgba(8, 9, 28, 0.78); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      }
+      .pz-overlay.show { display: flex; animation: pzFade 0.4s ease; }
+      @keyframes pzFade { from { opacity: 0; } }
+      .pz-card { text-align: center; padding: 0.8rem; width: 100%; }
+      .pz-card h4 { margin: 0.4rem 0 0.3rem; color: var(--warm-yellow); font-size: 1.1rem; }
+      .pz-muted { margin: 0.2rem 0; font-size: 0.82rem; color: var(--silver); }
+      .pz-muted b { color: var(--subtle-green); }
+      .pz-big { margin: 0.2rem 0; font-size: 1.25rem; font-weight: 800; color: var(--text-primary); }
+      .pz-btn {
+        margin-top: 0.7rem; padding: 0.65rem 1.6rem; border: none; border-radius: 999px; cursor: pointer;
+        font: inherit; font-weight: 800; color: var(--bg-primary);
+        background: linear-gradient(90deg, var(--warm-yellow), var(--text-secondary));
+        box-shadow: 0 0 16px rgba(244, 233, 140, 0.35); transition: transform 0.2s ease, filter 0.2s ease;
+      }
+      .pz-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+      .pz-btn.ghost { color: var(--text-primary); background: transparent; border: 1px solid var(--silver); box-shadow: none; padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+      .pz-medal {
+        position: relative; z-index: 2; width: 84px; height: 84px; margin: 0 auto; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--bg-primary);
+        background: linear-gradient(145deg, var(--warm-yellow), var(--text-secondary));
+        box-shadow: 0 0 26px rgba(244, 233, 140, 0.6), inset 0 -6px 12px rgba(0, 0, 0, 0.25);
+      }
+      .pz-medal.sm { width: 52px; height: 52px; font-size: 1.4rem; }
+      .pz-medal.tier-silver { background: linear-gradient(145deg, var(--text-primary), var(--soft-blue)); box-shadow: 0 0 26px rgba(147, 202, 237, 0.6); }
+      .pz-medal.tier-bronze { background: linear-gradient(145deg, var(--text-secondary), var(--muted-purple)); box-shadow: 0 0 26px rgba(210, 175, 38, 0.45); color: var(--text-primary); }
+      .pz-medal.tier-none { background: var(--muted-purple); box-shadow: none; color: var(--text-primary); }
+      .pz-card.reveal .pz-medal { animation: pzMedal 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; }
+      @keyframes pzMedal { 0% { transform: scale(0) rotate(-200deg); } 100% { transform: scale(1) rotate(0); } }
+      .pz-medal-wrap { position: relative; width: 120px; height: 110px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+      .pz-ring {
+        position: absolute; width: 112px; height: 112px; border-radius: 50%;
+        background: conic-gradient(var(--warm-yellow), transparent 25%, var(--soft-blue) 50%, transparent 75%, var(--warm-yellow));
+        -webkit-mask: radial-gradient(circle, transparent 52px, #000 54px); mask: radial-gradient(circle, transparent 52px, #000 54px);
+        animation: pzSpin 4s linear infinite, pzFade 1s ease;
+      }
+      @keyframes pzSpin { to { transform: rotate(360deg); } }
+      .pz-spark {
+        position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%;
+        background: var(--warm-yellow); opacity: 0; animation: pzSpark 1.3s ease-out forwards;
+      }
+      .pz-spark:nth-child(3n) { background: var(--soft-blue); }
+      .pz-spark:nth-child(3n + 1) { background: var(--subtle-green); }
+      @keyframes pzSpark {
+        0% { transform: rotate(var(--a)) translateX(20px) scale(1); opacity: 1; }
+        100% { transform: rotate(var(--a)) translateX(var(--d)) scale(0.2); opacity: 0; }
+      }
+      .pz-tier { margin: 0.1rem 0; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--silver); animation: pzFade 1s ease 0.5s both; }
+      .pz-tier.tier-gold { color: var(--warm-yellow); }
+      .pz-tier.tier-silver { color: var(--soft-blue); }
+      .pz-tier.tier-bronze { color: var(--text-secondary); }
+      .pz-xp {
+        margin: 0.1rem 0; font-size: 2.2rem; font-weight: 900; font-variant-numeric: tabular-nums;
+        background: linear-gradient(100deg, var(--text-secondary) 20%, var(--text-primary) 45%, var(--warm-yellow) 55%, var(--text-secondary) 80%);
+        background-size: 250% 100%; -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: var(--warm-yellow); animation: pzShine 2.4s linear infinite;
+      }
+      @keyframes pzShine { to { background-position: -250% 0; } }
+      .pz-stars { margin: 0.2rem 0 0.3rem; font-size: 1.2rem; }
+      .pz-star { display: inline-block; margin: 0 0.15rem; color: rgba(192, 192, 192, 0.35); }
+      .pz-star.on { color: var(--warm-yellow); text-shadow: 0 0 10px rgba(244, 233, 140, 0.8); animation: pzStar 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.6) both; }
+      @keyframes pzStar { 0% { transform: scale(0) rotate(-90deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+      .pz-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 0.8rem; }
+      .pz-info-card { padding: 0.8rem 0.9rem; border-radius: 12px; border: 1px solid rgba(147, 202, 237, 0.4); background: rgba(255, 255, 255, 0.05); }
+      .pz-info-card h4 { margin: 0 0 0.3rem; color: var(--warm-yellow); font-size: 0.95rem; }
+      .pz-info-card h4 i { margin-right: 0.35rem; color: var(--soft-blue); }
+      .pz-info-card p { margin: 0; font-size: 0.82rem; line-height: 1.45; }
+      @media (max-width: 480px) {
+        .pz-medal { width: 64px; height: 64px; font-size: 1.7rem; }
+        .pz-medal-wrap { height: 90px; }
+        .pz-ring { width: 90px; height: 90px; -webkit-mask: radial-gradient(circle, transparent 41px, #000 43px); mask: radial-gradient(circle, transparent 41px, #000 43px); }
+        .pz-xp { font-size: 1.8rem; }
+        .pz-card { padding: 0.4rem; }
+        .pz-board { gap: 6px; padding: 6px; }
+      }
+
+      /* ===== Illustrations ===== */
+      .svg-placeholder { position: relative; }
+      .svg-placeholder .ill-orb {
+        position: absolute; left: -4%; bottom: -4%; width: 92px; max-width: 92px; height: auto; margin: 0;
+        pointer-events: none; filter: drop-shadow(0 0 14px rgba(244, 233, 140, 0.55));
+        animation: illFloat 3.6s ease-in-out infinite;
+      }
+      @keyframes illFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+      .ill-tower {
+        display: block; width: 100%; max-width: 230px; height: auto; margin: 1.2rem auto 0;
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+      }
+      .ill-banner {
+        display: block; width: 100%; max-width: 330px; height: auto; margin: 0 auto 0.9rem;
+        filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+      }
+      .ill-banner.wide { max-width: 390px; }
+      .reward-icon.chest {
+        width: 76px; height: 68px; border-radius: 0; background: none; box-shadow: none; overflow: visible;
+        filter: drop-shadow(0 0 10px rgba(244, 233, 140, 0.5));
+        animation: illFloat 3.2s ease-in-out infinite;
+      }
+      .reward-icon.chest img { width: 100%; height: auto; margin: 0; }
+      @media (max-width: 480px) {
+        .svg-placeholder .ill-orb { width: 64px; max-width: 64px; left: 4%; }
+        .ill-tower { max-width: 170px; }
+        .ill-banner { max-width: 280px; }
+        .reward-icon.chest { width: 60px; height: 54px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ill-orb, .reward-icon.chest { animation: none; }
+      }
+
+      /* ===== Dynamic reward tower ===== */
+      .ill-tower svg { display: block; width: 100%; height: auto; overflow: visible; }
+      .tw-tier rect { fill: url(#tPur); stroke: var(--bg-primary); stroke-width: 1.5; opacity: 0.85; transition: fill 0.6s ease; }
+      .tw-tier text { fill: var(--silver); font: 800 13px Arial, sans-serif; }
+      .tw-tier .tw-lock rect { fill: var(--silver); stroke: none; opacity: 0.8; }
+      .tw-tier .tw-lock path { stroke: var(--silver); stroke-width: 1.6; }
+      .tw-tier.done rect { fill: url(#tGrn); opacity: 1; }
+      .tw-tier.cur rect { fill: url(#twgd); opacity: 1; }
+      .tw-tier.done text, .tw-tier.cur text { fill: var(--bg-primary); }
+      .tw-tier.done .tw-lock, .tw-tier.cur .tw-lock { display: none; }
+      #twMascot { transition: transform 1.4s cubic-bezier(0.3, 0.7, 0.3, 1); }
+      .tw-bob { animation: twBob 2.4s ease-in-out infinite; }
+      @keyframes twBob { 50% { transform: translateY(-3px) scale(0.62); } }
+      @media (prefers-reduced-motion: reduce) { .tw-bob { animation: none; } #twMascot { transition: none; } }
+
+      /* ===== Interactions ===== */
+      .cta-btn {
+        display: block; margin: 1.1rem auto 0; padding: 0.75rem 1.5rem; border: none; border-radius: 999px;
+        cursor: pointer; font: inherit; font-weight: 800; color: var(--bg-primary);
+        background: linear-gradient(90deg, var(--warm-yellow), var(--text-secondary));
+        box-shadow: 0 0 18px rgba(244, 233, 140, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      }
+      .cta-btn span { display: inline-block; transition: transform 0.2s ease; }
+      .cta-btn:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), 0 0 22px rgba(244, 233, 140, 0.5); }
+      .cta-btn:hover span { transform: translateX(5px); }
+      .cta-btn:active { transform: scale(0.97); }
+      .cta-btn:focus-visible, .level-item:focus-visible { outline: 2px solid var(--soft-blue); outline-offset: 3px; }
+      .card, #level-display { scroll-margin-top: 80px; }
+      .card.flash { animation: cardFlash 1.6s ease-out; }
+      @keyframes cardFlash {
+        0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+        25%, 60% { box-shadow: 0 0 0 3px var(--warm-yellow), 0 0 30px rgba(244, 233, 140, 0.55); }
+      }
+      .level-item { cursor: pointer; border-radius: 12px; transition: background-color 0.2s ease; }
+      .level-item:hover { background-color: rgba(255, 255, 255, 0.05); }
+      .level-item.selected { background-color: rgba(244, 233, 140, 0.1); box-shadow: 0 0 0 1px rgba(244, 233, 140, 0.45); }
+      .level-detail {
+        display: flex; flex-direction: column; gap: 0.2rem; max-width: 540px; margin: 1.1rem auto 0;
+        padding: 0.8rem 1rem; text-align: center; border-radius: 12px;
+        border: 1px dashed var(--warm-yellow); background: rgba(0, 0, 0, 0.35);
+      }
+      .level-detail strong { color: var(--warm-yellow); font-size: 1.05rem; }
+      .level-detail .ld-state { align-self: center; padding: 0.1rem 0.7rem; border-radius: 999px; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bg-primary); background: var(--soft-blue); }
+      .level-detail .ld-lines { color: var(--silver); font-size: 0.85rem; line-height: 1.5; }
+      @media (prefers-reduced-motion: reduce) { .card.flash { animation: none; } }
+
+      /* ===== Earning card hover previews ===== */
+      .earn-stack { display: grid; flex: 1; cursor: help; border-radius: 10px; }
+      .earn-stack:focus-visible { outline: 2px solid var(--soft-blue); outline-offset: 3px; }
+      .earn-main, .earn-preview { grid-area: 1 / 1; transition: opacity 0.25s ease, transform 0.25s ease; }
+      .earn-main { display: flex; flex-direction: column; gap: 0.55rem; }
+      .earn-main .earn-desc { flex: 0 0 auto; }
+      .earn-hint { margin-top: auto; font-size: 0.7rem; color: var(--soft-blue); opacity: 0.8; }
+      .earn-hint::after { content: "\24d8  Hover for details"; }
+      @media (hover: none) { .earn-hint::after { content: "\24d8  Tap for details"; } }
+      .earn-preview {
+        opacity: 0; visibility: hidden; transform: translateY(8px); pointer-events: none;
+        padding: 0.65rem 0.75rem; border-radius: 10px; text-align: left;
+        border: 1px dashed var(--accent); background: rgba(0, 0, 0, 0.35);
+      }
+      .earn-preview h5 { margin: 0 0 0.35rem; color: var(--accent); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+      .earn-preview ul { margin: 0; padding-left: 1.05rem; }
+      .earn-preview li { margin-bottom: 0.25rem; color: var(--text-primary); font-size: 0.78rem; line-height: 1.35; }
+      .earn-preview li::marker { color: var(--accent); }
+      .earn-stack:hover .earn-main, .earn-stack:focus .earn-main, .earn-card.previewing .earn-main { opacity: 0; transform: translateY(-8px); }
+      .earn-stack:hover .earn-preview, .earn-stack:focus .earn-preview, .earn-card.previewing .earn-preview { opacity: 1; visibility: visible; transform: none; }
+      .hero-cta { margin-top: 0.9rem; }
+
+      /* ===== Single-column page: every section is 100% wide ===== */
+      .grid { grid-template-columns: minmax(0, 1fr) !important; }
+      @media (min-width: 900px) {
+        #earnGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        #lucky-box-card {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          column-gap: 2rem;
+          grid-template-rows: auto auto auto auto 1fr;
+          align-items: start;
+        }
+        #lucky-box-card > h3, #lucky-box-card > p { grid-column: 1 / -1; }
+        #lucky-box-card > .ill-banner { grid-column: 1; grid-row: 3; }
+        #lucky-box-card > .game-area { grid-column: 1; grid-row: 4; width: 100%; }
+        #lucky-box-card > .game-info { grid-column: 2; grid-row: 3 / span 3; margin-top: 0; }
+        #lucky-box-card > :last-child { grid-column: 1; grid-row: 5; align-self: start; margin-top: 0.8rem; }
+      }
+
+      /* ===== Compact header with logo ===== */
+      header { padding: 0.55rem 1rem 0.65rem; }
+      .brand { display: flex; align-items: center; justify-content: center; gap: 0.7rem; }
+      .brand-logo { display: inline-flex; flex: 0 0 auto; border-radius: 50%; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .brand-logo img { width: 48px; height: 48px; display: block; border-radius: 50%; object-fit: cover; box-shadow: 0 0 12px rgba(244, 233, 140, 0.35); }
+      .brand-logo:hover { transform: scale(1.08) rotate(-4deg); box-shadow: 0 0 18px rgba(244, 233, 140, 0.6); }
+      .brand-logo:focus-visible { outline: 2px solid var(--soft-blue); outline-offset: 3px; }
+      header h1 { margin: 0; font-size: 1.7rem; line-height: 1.1; }
+      header p.subtitle { margin: 0.15rem 0 0; font-size: 0.82rem; }
+      header nav.main-nav { margin-top: 0.35rem; }
+      header nav.main-nav a { padding-top: 0.15rem; padding-bottom: 0.15rem; }
+      @media (max-width: 480px) {
+        header { padding: 0.45rem 0.6rem 0.55rem; }
+        .brand { gap: 0.5rem; }
+        .brand-logo img { width: 38px; height: 38px; }
+        header h1 { font-size: 1.3rem; }
+        header p.subtitle { font-size: 0.74rem; }
+      }
+
+      /* ===== Navigation: six links, fits on phones ===== */
+      nav.main-nav .short { display: none; }
+      @media (max-width: 640px) {
+        header nav.main-nav {
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          gap: 0.7rem;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x proximity;
+        }
+        header nav.main-nav::-webkit-scrollbar { display: none; }
+        header nav.main-nav a { flex: 0 0 auto; font-size: 0.8rem; white-space: nowrap; scroll-snap-align: center; }
+        header nav.main-nav a:first-child { margin-left: auto; }
+        header nav.main-nav a:last-child { margin-right: auto; }
+        nav.main-nav .full { display: none; }
+        nav.main-nav .short { display: inline; }
+      }
+      @media (max-width: 360px) {
+        header nav.main-nav { gap: 0.55rem; }
+        header nav.main-nav a { font-size: 0.74rem; }
+      }
     </style>
   </head>
   <body>
@@ -2207,11 +2487,19 @@
     </div>
 
     <header>
-      <h1>Hello VeLooper</h1>
+      <div class="brand">
+        <a class="brand-logo" href="https://www.velooprewards.in/" target="_blank" rel="noopener noreferrer" aria-label="Open the VELoop Rewards website">
+          <img src="images/Animation-VELoop.webp" alt="VELoop animated logo" width="48" height="48" />
+        </a>
+        <h1>Hello VeLooper</h1>
+      </div>
       <p class="subtitle">Daily unlock epic rewards, and Level up.</p>
-      <nav class="main-nav">
-        <a href="index.html" class="active">Home</a>
+      <nav class="main-nav" aria-label="Page sections">
+        <a href="#level-display" class="active">Home</a>
+        <a href="#level-progression"><span class="full">Level Progression</span><span class="short">Levels</span></a>
         <a href="#earn-section">Earn</a>
+        <a href="#lucky-box-card"><span class="full">Lucky Box</span><span class="short">Lucky Box</span></a>
+        <a href="#puzzle-card">Puzzle</a>
         <a href="#activity-card">Activity</a>
       </nav>
     </header>
@@ -2234,14 +2522,18 @@
           <div class="reward-card" id="rewardText"></div>
           <p class="xp-reward" id="claimText"></p>
           <div class="level-path" id="levelPath"></div>
+          <button type="button" class="cta-btn hero-cta" data-scroll="lucky-box-card">
+            Play &amp; earn XP <span aria-hidden="true">&rarr;</span>
+          </button>
         </div>
         <div class="svg-placeholder">
           <img id="currentLevelIcon" src="" alt="Current level icon" />
+          <img class="ill-orb" src="illustrations/xp-orb.svg" alt="Glowing XP orb" />
         </div>
       </div>
 
       <!-- LEVEL PROGRESSION -->
-      <div class="card standalone-card">
+      <div class="card standalone-card" id="level-progression">
         <div class="progression-left">
           <h3>
             Level Progression
@@ -2252,9 +2544,32 @@
           </h3>
           <p class="progression-note" id="noteOne"></p>
           <p class="progression-note" id="noteTwo"></p>
+          <div class="ill-tower" id="levelTower"><svg id="towerSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 316" role="img" aria-label="Reward tower"><defs><filter id="twbl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter><filter id="twbs" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter><linearGradient id="twgd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e98c"/><stop offset="1" stop-color="#d2af26"/></linearGradient><linearGradient id="twmb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93caed"/><stop offset="1" stop-color="#805b87"/></linearGradient>
+<radialGradient id="twmg"><stop offset="0" stop-color="#fff7c2"/><stop offset=".5" stop-color="#f4e98c"/><stop offset="1" stop-color="#f4e98c" stop-opacity="0"/></radialGradient><linearGradient id="tGrn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7e9c1"/><stop offset="1" stop-color="#6fb383"/></linearGradient><linearGradient id="tPur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a4f73"/><stop offset="1" stop-color="#3b2a4d"/></linearGradient></defs><ellipse cx="120" cy="70" rx="90" ry="64" fill="#f4e98c" opacity=".3" filter="url(#twbl)"/><ellipse cx="120" cy="308" rx="100" ry="9" fill="#000" opacity=".3"/><g class="tw-tier" id="twT0"><rect x="32.0" y="262" width="176" height="25" rx="6"/><text x="46.0" y="279">1</text><g class="tw-lock" transform="translate(190.0 268)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT1"><rect x="37.0" y="236" width="166" height="25" rx="6"/><text x="51.0" y="253">2</text><g class="tw-lock" transform="translate(185.0 242)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT2"><rect x="42.0" y="210" width="156" height="25" rx="6"/><text x="56.0" y="227">3</text><g class="tw-lock" transform="translate(180.0 216)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT3"><rect x="47.0" y="184" width="146" height="25" rx="6"/><text x="61.0" y="201">4</text><g class="tw-lock" transform="translate(175.0 190)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT4"><rect x="52.0" y="158" width="136" height="25" rx="6"/><text x="66.0" y="175">5</text><g class="tw-lock" transform="translate(170.0 164)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT5"><rect x="57.0" y="132" width="126" height="25" rx="6"/><text x="71.0" y="149">6</text><g class="tw-lock" transform="translate(165.0 138)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT6"><rect x="62.0" y="106" width="116" height="25" rx="6"/><text x="76.0" y="123">7</text><g class="tw-lock" transform="translate(160.0 112)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT7"><rect x="67.0" y="80" width="106" height="25" rx="6"/><text x="81.0" y="97">8</text><g class="tw-lock" transform="translate(155.0 86)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g class="tw-tier" id="twT8"><rect x="72.0" y="54" width="96" height="25" rx="6"/><text x="86.0" y="71">9</text><g class="tw-lock" transform="translate(150.0 60)"><rect x="0" y="6" width="10" height="8" rx="2"/><path d="M2 6v-3a3 3 0 0 1 6 0v3" fill="none"/></g></g><g transform="translate(94 4) scale(.38)"><ellipse cx="70" cy="66" rx="58" ry="40" fill="#f4e98c" opacity=".7" filter="url(#twbl)"/>
+<rect x="20" y="56" width="100" height="52" rx="8" fill="#6a4f73" stroke="#161827" stroke-width="4"/>
+<path d="M20 60 Q20 18 70 18 Q120 18 120 60Z" fill="#a47bad" stroke="#161827" stroke-width="4"/>
+<rect x="34" y="20" width="11" height="88" fill="url(#twgd)"/><rect x="95" y="20" width="11" height="88" fill="url(#twgd)"/><rect x="18" y="52" width="104" height="10" rx="4" fill="url(#twgd)"/>
+<rect x="58" y="58" width="24" height="30" rx="6" fill="url(#twgd)" stroke="#161827" stroke-width="3"/></g><path d="M70 16L71.76 22.24L78 24L71.76 25.76L70 32L68.24 25.76L62 24L68.24 22.24Z" fill="#f4e98c" opacity="1"/><path d="M176 24L177.32 28.68L182 30L177.32 31.32L176 36L174.68 31.32L170 30L174.68 28.68Z" fill="#93caed" opacity="1"/><path d="M200 85L201.1 88.9L205 90L201.1 91.1L200 95L198.9 91.1L195 90L198.9 88.9Z" fill="#b7e9c1" opacity="1"/><path d="M40 76L40.88 79.12L44 80L40.88 80.88L40 84L39.12 80.88L36 80L39.12 79.12Z" fill="#f4e98c" opacity="1"/><path id="twPath" d="" stroke="#f4e98c" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round" fill="none"/><g id="twMascot"><g class="tw-bob" transform="scale(0.62)">
+<ellipse cx="0" cy="2" rx="30" ry="6" fill="#000" opacity=".25"/>
+<ellipse cx="-12" cy="-2" rx="10" ry="6" fill="#805b87"/><ellipse cx="12" cy="-2" rx="10" ry="6" fill="#805b87"/>
+<path d="M-24 -24 Q-25.0 -44.0 -26 -52" stroke="#805b87" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="-26" cy="-52" r="6" fill="#93caed" stroke="#805b87" stroke-width="2"/><path d="M24 -24 Q26.0 -33.0 28 -30" stroke="#805b87" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="28" cy="-30" r="6" fill="#93caed" stroke="#805b87" stroke-width="2"/>
+<ellipse cx="0" cy="-30" rx="27" ry="29" fill="url(#twmb)" stroke="#000052" stroke-opacity=".5" stroke-width="2"/>
+<ellipse cx="0" cy="-20" rx="16" ry="14" fill="#fff" opacity=".22"/>
+<circle cx="-10" cy="-37" r="8" fill="#fff"/><circle cx="10" cy="-37" r="8" fill="#fff"/>
+<circle cx="-9" cy="-36" r="3.6" fill="#161827"/><circle cx="11" cy="-36" r="3.6" fill="#161827"/>
+<circle cx="-10" cy="-38" r="1.2" fill="#fff"/><circle cx="10" cy="-38" r="1.2" fill="#fff"/>
+<path d="M-8 -24 Q0 -15 8 -24" stroke="#161827" stroke-width="3" fill="none" stroke-linecap="round"/>
+<circle cx="-18" cy="-27" r="4" fill="#f4e98c" opacity=".5"/><circle cx="18" cy="-27" r="4" fill="#f4e98c" opacity=".5"/>
+<line x1="0" y1="-59" x2="0" y2="-70" stroke="#c0c0c0" stroke-width="3" stroke-linecap="round"/>
+<circle cx="0" cy="-73" r="11" fill="url(#twmg)"/><circle cx="0" cy="-73" r="4.5" fill="#f4e98c"/>
+</g></g></svg></div>
+          <button type="button" class="cta-btn" data-scroll="earn-section">
+            Earn XP to level up <span aria-hidden="true">&rarr;</span>
+          </button>
         </div>
         <div class="progression-right">
           <div class="level-progression-grid" id="levelGrid"></div>
+          <div class="level-detail" id="levelDetail" aria-live="polite"></div>
         </div>
       </div>
 
@@ -2264,6 +2579,7 @@
           <h3 class="heading-center">Earn more XP to reach your next level</h3>
           <p class="earn-remaining" id="earnRemaining"></p>
           <p>Fun activities for exciting rewards</p>
+          <img class="ill-banner wide" src="illustrations/coins-wallet.svg" alt="XP coins flowing into your wallet" />
           <div class="icon-grid" id="earnGrid"></div>
         </div>
 
@@ -2273,6 +2589,7 @@
           <p style="text-align: center; margin-bottom: 1rem">
             Pick a box to win instant XP!
           </p>
+          <img class="ill-banner" src="illustrations/lucky-box-game.svg" alt="A character inviting you to pick one of three gift boxes" />
 
           <div class="game-area">
             <div class="lucky-box" data-box="1">
@@ -2330,6 +2647,41 @@
           <div class="cooldown-timer" id="timer">Next play in: 24h 00m 00s</div>
         </div>
 
+        <!-- Card: Daily Puzzle -->
+        <div class="card full-width-card" id="puzzle-card">
+          <h3 class="heading-center">Daily Puzzle</h3>
+          <p class="puzzle-sub">
+            Slide the tiles into order and win XP &ndash; one reward a day!
+          </p>
+          <img class="ill-banner" src="illustrations/puzzle-game.svg" alt="A character sliding a tile into place on a number puzzle" />
+          <div class="puzzle-layout">
+            <div class="puzzle-play">
+              <div class="pz-stats">
+                <div class="pz-stat"><span>Time</span><b id="pzTime">1:30</b></div>
+                <div class="pz-stat"><span>Moves</span><b id="pzMoves">0</b></div>
+                <div class="pz-stat"><span>Score</span><b id="pzScore">&ndash;</b></div>
+              </div>
+              <div class="pz-progress">
+                <span id="pzProgressText">0 / 8 tiles in place</span>
+                <div class="pz-bar"><div id="pzProgressBar"></div></div>
+              </div>
+              <div class="pz-board-wrap">
+                <div class="pz-board" id="pzBoard" role="group" aria-label="Sliding puzzle board"></div>
+                <div class="pz-overlay" id="pzOverlay"></div>
+              </div>
+            </div>
+            <div class="pz-info">
+              <div class="pz-info-card"><h4><i class="fa fa-hand-pointer-o"></i> How to Play</h4><p>Tap a tile next to the empty space to slide it across (or use the arrow keys). Keep sliding until the numbers run 1 to 8 in order.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-bullseye"></i> Objective</h4><p>Arrange tiles 1&ndash;8 in order, with the empty space in the bottom-right corner.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-clock-o"></i> Time &amp; Attempts</h4><p>90 seconds per attempt. You get 2 reward attempts per day.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-gift"></i> Reward</h4><p>Solve it to win XP: Gold +100, Silver +60, Bronze +30.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-star"></i> Score</h4><p>Starts at 1,000 and drops with every move and second (minimum 100). Gold needs 750+, Silver 500+.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-id-card-o"></i> Eligibility</h4><p>Open to every player at any level. Only a solved puzzle earns XP, and practice rounds earn none.</p></div>
+              <div class="pz-info-card"><h4><i class="fa fa-calendar-check-o"></i> How Often</h4><p>One reward per day, resetting at midnight your time. Replay for practice any time.</p></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Card 3: Recent XP Activity -->
         <div class="card full-width-card" id="activity-card">
           <h3>Recent XP Activity</h3>
@@ -2349,7 +2701,7 @@
       </div>
     </div>
 
-    <footer>&copy; 2026 VeLooper. Built with pure HTML/CSS/JS.</footer>
+    <footer>&copy; 2026, VELoop.</footer>
 
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
       &uarr;
@@ -2460,6 +2812,7 @@
             earningOpportunities: [
               {
                 title: "Watch Ads",
+                details: ["Watch a short video ad (about 30 seconds).", "Up to 5 ads a day.", "Each ad adds XP, up to the card maximum."],
                 description: "Watch short video ads and earn quick XP.",
                 icon: "fa-television",
                 xp: 50,
@@ -2468,6 +2821,7 @@
               },
               {
                 title: "Refer Friends",
+                details: ["Share your personal invite link.", "Your friend signs up and finishes onboarding.", "You earn XP for every friend who joins."],
                 description: "Invite friends and earn XP when they join.",
                 icon: "fa-users",
                 xp: 100,
@@ -2476,6 +2830,7 @@
               },
               {
                 title: "Daily Tasks",
+                details: ["Pick from a few simple tasks each day.", "For example: check in, read a tip, finish a profile step.", "Each completed task adds a little XP."],
                 description: "Complete simple daily tasks for steady XP.",
                 icon: "fa-check-square-o",
                 xp: 25,
@@ -2484,16 +2839,19 @@
               },
               {
                 title: "Play Games",
-                unlockLevel: 5,
+                details: ["Play the Lucky Box or the Daily Puzzle.", "Each game can be played once a day.", "Your reward depends on your luck or your score."],
+                unlockLevel: 2,
+                target: "lucky-box-card",
                 description: "Play mini games and win bonus XP.",
                 icon: "fa-gamepad",
-                xp: 75,
+                xp: 200,
                 status: "locked",
-                label: "Unlock at Level 5",
+                label: "Unlock at Level 2",
                 availableLabel: "Play Now",
               },
               {
                 title: "Bonus Missions",
+                details: ["Special missions with bigger goals.", "Finish the mission to claim the bonus XP.", "Coming soon: keep an eye on this card."],
                 description: "Take on special missions for big XP rewards.",
                 icon: "fa-star",
                 xp: 200,
@@ -2502,6 +2860,7 @@
               },
               {
                 title: "Streak XP",
+                details: ["Log in every day to build a streak.", "The longer the streak, the bigger the bonus.", "Miss a day and the streak starts over."],
                 description: "Log in every day to build a streak and boost XP.",
                 icon: "fa-fire",
                 xp: 30,
@@ -2801,8 +3160,52 @@
           }
         }
 
+        // Move the mascot up the reward tower to match the player's level
+        function updateTower(level) {
+          var svgEl = document.getElementById("towerSvg");
+          if (!svgEl) return;
+          var pos = function (i) {
+            return { x: 120 + (176 - i * 10) / 2 - 40, y: 288 - (i + 1) * 26 };
+          };
+          for (var i = 0; i < 9; i++) {
+            var t = document.getElementById("twT" + i);
+            t.setAttribute(
+              "class",
+              "tw-tier " + (i + 1 < level ? "done" : i + 1 === level ? "cur" : ""),
+            );
+          }
+          var d = "";
+          for (var j = 0; j < level; j++) {
+            d += (j ? " L" : "M") + (pos(j).x + 6) + " " + (pos(j).y + 12);
+          }
+          document.getElementById("twPath").setAttribute("d", d);
+          var m = document.getElementById("twMascot");
+          var place = function (idx) {
+            m.style.transform = "translate(" + pos(idx).x + "px," + pos(idx).y + "px)";
+          };
+          m.dataset.lvl = level; // latest level (the first-render timer reads this)
+          if (!m.dataset.ready) {
+            // First render: start on floor 1 and climb up to the current floor
+            m.dataset.ready = "1";
+            m.style.transition = "none";
+            place(0);
+            void m.getBoundingClientRect();
+            window.setTimeout(function () {
+              m.style.transition = "";
+              place(Number(m.dataset.lvl) - 1);
+            }, 400);
+          } else {
+            place(level - 1);
+          }
+          svgEl.setAttribute(
+            "aria-label",
+            "Reward tower: you are on level " + level + " of 9",
+          );
+        }
+
         function renderRewards(cfg) {
           syncLevelToXP(cfg);
+          updateTower(cfg.player.currentLevel);
           var p = cfg.player;
           var t = cfg.copy;
           var maxed = !!p.maxLevel;
@@ -2937,13 +3340,16 @@
           rewardEl.className = "reward-card" + (maxed ? " unlocked" : "");
           var rIcon = document.createElement("div");
           rIcon.className = "reward-icon";
-          var rGift = document.createElement("i");
-          rGift.className = "fa " + (maxed ? "fa-trophy" : "fa-gift");
-          rIcon.appendChild(rGift);
-          if (!maxed) {
-            var rLock = document.createElement("i");
-            rLock.className = "fa fa-lock reward-lock";
-            rIcon.appendChild(rLock);
+          if (maxed) {
+            var rGift = document.createElement("i");
+            rGift.className = "fa fa-trophy";
+            rIcon.appendChild(rGift);
+          } else {
+            rIcon.classList.add("chest");
+            var rChest = document.createElement("img");
+            rChest.src = "illustrations/reward-chest.svg";
+            rChest.alt = "Locked reward chest";
+            rIcon.appendChild(rChest);
           }
           var rBody = document.createElement("div");
           rBody.className = "reward-body";
@@ -3092,8 +3498,27 @@
             pill.appendChild(pillIcon);
             pill.appendChild(document.createTextNode(" " + STATES[state].label));
             item.appendChild(pill);
+            item.setAttribute("role", "button");
+            item.setAttribute("tabindex", "0");
+            item.setAttribute("aria-label", "Level " + lvl.level + " details");
+            if (lvl.level === levelDetailShown) item.classList.add("selected");
+            var openDetail = function () {
+              levelDetailPinned = true;
+              levelDetailShown = lvl.level;
+              showLevelDetail(cfg);
+            };
+            item.addEventListener("click", openDetail);
+            item.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openDetail();
+              }
+            });
             grid.appendChild(item);
           });
+
+          if (!levelDetailPinned) levelDetailShown = p.currentLevel;
+          showLevelDetail(cfg);
 
           // Lucky Box Info
           document.getElementById("luckyRange").textContent = fillTemplate(
@@ -3116,6 +3541,7 @@
           earnGrid.textContent = "";
           if (cfg.earningOpportunities) {
             var maxOpXP = 0;
+            var ribbonGiven = false; // only one card gets the Best Value ribbon
             cfg.earningOpportunities.forEach(function (o) {
               if (o.xp > maxOpXP) maxOpXP = o.xp;
             });
@@ -3148,7 +3574,8 @@
                 box.classList.add("enter");
                 box.style.animationDelay = opIndex * 90 + "ms";
               }
-              if (op.xp && op.xp === maxOpXP) {
+              if (op.xp && op.xp === maxOpXP && !ribbonGiven) {
+                ribbonGiven = true;
                 var ribbon = document.createElement("span");
                 ribbon.className = "earn-ribbon";
                 ribbon.textContent = "\u2605 Best Value";
@@ -3167,21 +3594,57 @@
               title.textContent = op.title;
               head.appendChild(iconWrap);
               head.appendChild(title);
-              box.appendChild(head);
+              var stack = document.createElement("div");
+              stack.className = "earn-stack";
+              stack.tabIndex = 0;
+              stack.setAttribute("role", "button");
+              stack.setAttribute("aria-label", op.title + ": show what is involved");
+              var main = document.createElement("div");
+              main.className = "earn-main";
+              main.appendChild(head);
 
               if (op.xp) {
                 var xpLine = document.createElement("p");
                 xpLine.className = "earn-xp";
                 xpLine.textContent = "Earn up to +" + op.xp + " XP";
-                box.appendChild(xpLine);
+                main.appendChild(xpLine);
               }
 
               if (op.description) {
                 var desc = document.createElement("p");
                 desc.className = "earn-desc";
                 desc.textContent = op.description;
-                box.appendChild(desc);
+                main.appendChild(desc);
               }
+              var hint = document.createElement("span");
+              hint.className = "earn-hint";
+              main.appendChild(hint);
+
+              var preview = document.createElement("div");
+              preview.className = "earn-preview";
+              var pv = document.createElement("h5");
+              pv.textContent = "What\u2019s involved";
+              preview.appendChild(pv);
+              var ul = document.createElement("ul");
+              (op.details || []).forEach(function (line) {
+                var li = document.createElement("li");
+                li.textContent = line;
+                ul.appendChild(li);
+              });
+              preview.appendChild(ul);
+              stack.appendChild(main);
+              stack.appendChild(preview);
+              box.appendChild(stack);
+              var togglePreview = function () {
+                box.classList.toggle("previewing");
+              };
+              stack.addEventListener("click", togglePreview);
+              stack.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  togglePreview();
+                }
+              });
 
               var cta = document.createElement("button");
               cta.type = "button";
@@ -3200,6 +3663,10 @@
                   document.createTextNode((op.label || "Start Now") + " \u2192"),
                 );
                 cta.addEventListener("click", function () {
+                  if (op.target) {
+                    scrollToCard(op.target);
+                    return;
+                  }
                   if (typeof showToast === "function") {
                     showToast(
                       "\uD83C\uDFAF " + op.title + ": earn up to +" + op.xp + " XP!",
@@ -3316,12 +3783,385 @@
           renderActivity();
         }
 
+        // ===== Interactions: smooth scroll, level details, nav highlight =====
+        var levelDetailShown = null;
+        var levelDetailPinned = false;
+
+        function scrollToCard(id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            block: "start",
+          });
+          el.classList.remove("flash");
+          void el.offsetWidth;
+          el.classList.add("flash");
+          window.setTimeout(function () {
+            el.classList.remove("flash");
+          }, 1800);
+        }
+
+        function showLevelDetail(cfg) {
+          var box = document.getElementById("levelDetail");
+          if (!box || !levelDetailShown) return;
+          var p = cfg.player;
+          var lvl = cfg.levels.filter(function (l) {
+            return l.level === levelDetailShown;
+          })[0];
+          var rm = (cfg.levelRoadmap || []).filter(function (r) {
+            return r.level === levelDetailShown;
+          })[0];
+          if (!lvl) return;
+          var state =
+            lvl.level < p.currentLevel ? "Completed"
+            : lvl.level === p.currentLevel ? "You are here"
+            : lvl.level === p.currentLevel + 1 ? "Next goal"
+            : "Locked";
+          var lines = [];
+          if (rm) lines.push("Unlocks at " + numberWithCommas(rm.requiredXP) + " XP");
+          if (rm && rm.reward) lines.push("Reward: +" + rm.reward.amount + " " + rm.reward.type);
+          if (rm && lvl.level > p.currentLevel) {
+            lines.push(numberWithCommas(Math.max(0, rm.requiredXP - p.currentXP)) + " XP to go");
+          }
+          box.textContent = "";
+          var h = document.createElement("strong");
+          h.textContent = "Level " + lvl.level + (lvl.name ? " \u00b7 " + lvl.name : "");
+          var st = document.createElement("span");
+          st.className = "ld-state";
+          st.textContent = state;
+          var body = document.createElement("span");
+          body.className = "ld-lines";
+          body.textContent = lines.join("  \u2022  ");
+          box.appendChild(h);
+          box.appendChild(st);
+          box.appendChild(body);
+          Array.prototype.forEach.call(
+            document.querySelectorAll("#levelGrid .level-item"),
+            function (it, idx) {
+              it.classList.toggle("selected", idx + 1 === levelDetailShown);
+            },
+          );
+        }
+
+        function initInteractions() {
+          // Any element with data-scroll jumps to that section
+          document.addEventListener("click", function (e) {
+            var b = e.target.closest ? e.target.closest("[data-scroll]") : null;
+            if (b) scrollToCard(b.getAttribute("data-scroll"));
+          });
+          // Nav links: smooth scroll with highlight
+          Array.prototype.forEach.call(
+            document.querySelectorAll("nav.main-nav a"),
+            function (a) {
+              a.addEventListener("click", function (e) {
+                var id = (a.getAttribute("href") || "").replace("#", "");
+                if (id && document.getElementById(id)) {
+                  e.preventDefault();
+                  scrollToCard(id);
+                }
+              });
+            },
+          );
+          // Highlight the nav link of the section in view
+          var ids = ["level-display", "level-progression", "earn-section", "lucky-box-card", "puzzle-card", "activity-card"];
+          function spy() {
+            var current = ids[0];
+            ids.forEach(function (id) {
+              var el = document.getElementById(id);
+              if (el && el.getBoundingClientRect().top < window.innerHeight * 0.4) current = id;
+            });
+            var navEl = document.querySelector("nav.main-nav");
+            Array.prototype.forEach.call(navEl.querySelectorAll("a"), function (a) {
+              var on = a.getAttribute("href") === "#" + current;
+              var was = a.classList.contains("active");
+              a.classList.toggle("active", on);
+              // On phones the nav scrolls sideways: keep the active link visible
+              if (on && !was && navEl.scrollWidth > navEl.clientWidth) {
+                navEl.scrollTo({
+                  left: a.offsetLeft - (navEl.clientWidth - a.offsetWidth) / 2,
+                  behavior: prefersReducedMotion ? "auto" : "smooth",
+                });
+              }
+            });
+          }
+          window.addEventListener("scroll", spy, { passive: true });
+          spy();
+          // Daily Puzzle: arrow keys slide the tile into the gap
+          document.addEventListener("keydown", function (e) {
+            if (pz.phase !== "play") return;
+            var map = { ArrowLeft: 1, ArrowRight: -1, ArrowUp: 3, ArrowDown: -3 };
+            if (!(e.key in map)) return;
+            var card = document.getElementById("puzzle-card").getBoundingClientRect();
+            if (card.bottom < 0 || card.top > window.innerHeight) return;
+            var blank = pz.tiles.indexOf(0);
+            var from = blank + map[e.key];
+            if (from < 0 || from > 8) return;
+            if (Math.abs(map[e.key]) === 1 && Math.floor(from / 3) !== Math.floor(blank / 3)) return;
+            e.preventDefault();
+            pzMove(from);
+          });
+        }
+
+        // ===== Daily Puzzle (sliding tiles) =====
+        var PZ_KEY = "dailyPuzzleState";
+        var PZ_TIME = 90;
+        var PZ_ATTEMPTS = 2;
+        var pz = { tiles: [], moves: 0, left: PZ_TIME, phase: "idle", practice: false, day: "" };
+
+        function pzToday() {
+          var d = new Date();
+          return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        }
+        function pzLoad() {
+          try {
+            var st = JSON.parse(storage.get(PZ_KEY));
+            if (st && st.date === pzToday()) return st;
+          } catch (e) {}
+          return { date: pzToday(), attempts: 0, result: null };
+        }
+        function pzSave(st) {
+          storage.set(PZ_KEY, JSON.stringify(st));
+        }
+        function pzScoreNow(moves, elapsed) {
+          return Math.max(100, 1000 - moves * 6 - elapsed * 2);
+        }
+        function pzTier(score) {
+          if (score >= 750) return { key: "gold", name: "Gold Solver", xp: 100, stars: 3 };
+          if (score >= 500) return { key: "silver", name: "Silver Solver", xp: 60, stars: 2 };
+          return { key: "bronze", name: "Bronze Solver", xp: 30, stars: 1 };
+        }
+        function pzNeighbors(i) {
+          var r = Math.floor(i / 3), c = i % 3, out = [];
+          if (r > 0) out.push(i - 3);
+          if (r < 2) out.push(i + 3);
+          if (c > 0) out.push(i - 1);
+          if (c < 2) out.push(i + 1);
+          return out;
+        }
+        function pzInPlace() {
+          var n = 0;
+          for (var i = 0; i < 8; i++) if (pz.tiles[i] === i + 1) n++;
+          return n;
+        }
+        function pzShuffle() {
+          do {
+            pz.tiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+            var blank = 8, prev = -1;
+            for (var k = 0; k < 24; k++) {
+              var opts = pzNeighbors(blank).filter(function (n) { return n !== prev; });
+              var pick = opts[Math.floor(Math.random() * opts.length)];
+              pz.tiles[blank] = pz.tiles[pick];
+              pz.tiles[pick] = 0;
+              prev = blank;
+              blank = pick;
+            }
+          } while (pzInPlace() === 8);
+        }
+        function pzClock(sec) {
+          return Math.floor(sec / 60) + ":" + (sec % 60 < 10 ? "0" : "") + (sec % 60);
+        }
+        function pzNextText() {
+          var n = new Date();
+          var m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
+          var t = Math.floor((m - n) / 1000);
+          var f = function (v) { return (v < 10 ? "0" : "") + v; };
+          return f(Math.floor(t / 3600)) + ":" + f(Math.floor((t % 3600) / 60)) + ":" + f(t % 60);
+        }
+        function pzHud() {
+          var playing = pz.phase === "play";
+          document.getElementById("pzTime").textContent = pzClock(pz.left);
+          document.getElementById("pzMoves").textContent = pz.moves;
+          document.getElementById("pzScore").textContent =
+            pz.phase === "idle" ? "\u2013" : numberWithCommas(pzScoreNow(pz.moves, PZ_TIME - pz.left));
+          var n = pz.tiles.length ? pzInPlace() : 0;
+          document.getElementById("pzProgressText").textContent = n + " / 8 tiles in place";
+          document.getElementById("pzProgressBar").style.width = (n / 8) * 100 + "%";
+          document.getElementById("pzTime").classList.toggle("warn", playing && pz.left <= 15);
+        }
+        function pzRenderBoard() {
+          var board = document.getElementById("pzBoard");
+          board.textContent = "";
+          board.classList.toggle("idle", pz.phase !== "play");
+          var blank = pz.tiles.indexOf(0);
+          var near = pzNeighbors(blank);
+          for (var i = 0; i < 9; i++) {
+            var v = pz.tiles[i];
+            var t = document.createElement(v ? "button" : "div");
+            t.className = "pz-tile" + (v ? "" : " blank");
+            if (v) {
+              t.type = "button";
+              t.textContent = v;
+              t.setAttribute("data-i", i);
+              t.setAttribute("data-v", v);
+              t.setAttribute("aria-label", "Tile " + v);
+              if (v === i + 1) t.classList.add("ok");
+              if (pz.phase === "play" && near.indexOf(i) > -1) t.classList.add("movable");
+            }
+            board.appendChild(t);
+          }
+        }
+        function pzOverlay(inner) {
+          var el = document.getElementById("pzOverlay");
+          el.innerHTML = inner;
+          el.classList.add("show");
+        }
+        function pzHideOverlay() {
+          document.getElementById("pzOverlay").classList.remove("show");
+        }
+        function pzShowStart() {
+          pz.phase = "idle";
+          pz.day = pzToday();
+          var st = pzLoad();
+          pzRenderBoard();
+          pzHud();
+          if (st.result) {
+            var r = st.result;
+            pzOverlay(
+              '<div class="pz-card"><div class="pz-medal sm tier-' + r.key + '"><i class="fa fa-trophy"></i></div>' +
+              '<h4>Today\'s reward claimed</h4><p class="pz-big">+' + r.xp + ' XP &middot; ' + r.name + '</p>' +
+              '<p class="pz-muted">Score ' + numberWithCommas(r.score) + ' &middot; ' + r.moves + ' moves &middot; ' + r.time + 's</p>' +
+              '<p class="pz-muted">Next reward in <b id="pzNext">' + pzNextText() + '</b></p>' +
+              '<button class="pz-btn ghost" data-act="practice">Practice (no XP)</button></div>',
+            );
+          } else if (st.attempts >= PZ_ATTEMPTS) {
+            pzOverlay(
+              '<div class="pz-card"><div class="pz-medal sm tier-none"><i class="fa fa-lock"></i></div>' +
+              '<h4>No reward attempts left today</h4>' +
+              '<p class="pz-muted">Next reward in <b id="pzNext">' + pzNextText() + '</b></p>' +
+              '<button class="pz-btn ghost" data-act="practice">Practice (no XP)</button></div>',
+            );
+          } else {
+            pzOverlay(
+              '<div class="pz-card"><div class="pz-medal sm tier-gold"><i class="fa fa-puzzle-piece"></i></div>' +
+              '<h4>Ready for today\'s puzzle?</h4>' +
+              '<p class="pz-muted">Solve it in ' + PZ_TIME + 's to win up to <b>100 XP</b>.<br>Attempts left today: <b>' + (PZ_ATTEMPTS - st.attempts) + '</b></p>' +
+              '<button class="pz-btn" data-act="start">Start Puzzle</button></div>',
+            );
+          }
+        }
+        function pzStart(practice) {
+          pz.practice = practice;
+          pz.moves = 0;
+          pz.left = PZ_TIME;
+          pzShuffle();
+          pz.phase = "play";
+          if (!practice) {
+            var st = pzLoad();
+            st.attempts++;
+            pzSave(st);
+          }
+          pzHideOverlay();
+          pzRenderBoard();
+          pzHud();
+        }
+        function pzMove(i) {
+          if (pz.phase !== "play") return;
+          var blank = pz.tiles.indexOf(0);
+          if (pzNeighbors(blank).indexOf(i) < 0) return;
+          pz.tiles[blank] = pz.tiles[i];
+          pz.tiles[i] = 0;
+          pz.moves++;
+          pzRenderBoard();
+          pzHud();
+          if (pzInPlace() === 8) pzFinish(true);
+        }
+        function pzCountUp(el, to) {
+          var start = null;
+          (function tick(ts) {
+            if (start === null) start = ts;
+            var t = Math.min(1, (ts - start) / 1300);
+            el.textContent = Math.round(to * (1 - Math.pow(1 - t, 3)));
+            if (t < 1) window.requestAnimationFrame(tick);
+          })(performance.now());
+        }
+        function pzFinish(win) {
+          var elapsed = PZ_TIME - pz.left;
+          pz.phase = "done";
+          pzRenderBoard();
+          var st = pzLoad();
+          if (!win) {
+            var left = PZ_ATTEMPTS - st.attempts;
+            pzOverlay(
+              '<div class="pz-card"><div class="pz-medal sm tier-none"><i class="fa fa-hourglass-end"></i></div>' +
+              '<h4>' + "Time\'s up!" + '</h4>' +
+              '<p class="pz-muted">' + (pz.practice ? "Give it another go." : left > 0 ? "You have <b>" + left + "</b> reward attempt left today." : "No reward attempts left today.") + '</p>' +
+              '<button class="pz-btn" data-act="' + (pz.practice ? "practice" : left > 0 ? "start" : "practice") + '">' +
+              (pz.practice ? "Play Again" : left > 0 ? "Try Again" : "Practice (no XP)") + '</button></div>',
+            );
+            return;
+          }
+          var score = pzScoreNow(pz.moves, elapsed);
+          if (pz.practice) {
+            pzOverlay(
+              '<div class="pz-card"><div class="pz-medal sm tier-' + pzTier(score).key + '"><i class="fa fa-check"></i></div>' +
+              '<h4>Practice complete!</h4><p class="pz-big">Score ' + numberWithCommas(score) + '</p>' +
+              '<p class="pz-muted">' + pz.moves + ' moves &middot; ' + elapsed + 's &middot; no XP in practice</p>' +
+              '<button class="pz-btn" data-act="practice">Play Again</button></div>',
+            );
+            return;
+          }
+          var tier = pzTier(score);
+          st.result = { key: tier.key, name: tier.name, xp: tier.xp, score: score, moves: pz.moves, time: elapsed };
+          pzSave(st);
+          window.setTimeout(function () {
+            var stars = "";
+            for (var i = 0; i < 3; i++) {
+              stars += '<span class="pz-star' + (i < tier.stars ? " on" : "") + '" style="animation-delay:' + (1.1 + i * 0.35) + 's">\u2605</span>';
+            }
+            var sparks = "";
+            for (var k = 0; k < 14; k++) {
+              sparks += '<b class="pz-spark" style="--a:' + k * 26 + 'deg;--d:' + (60 + (k % 4) * 18) + 'px;animation-delay:' + (0.2 + (k % 5) * 0.08) + 's"></b>';
+            }
+            pzOverlay(
+              '<div class="pz-card reveal">' +
+              '<div class="pz-medal-wrap"><div class="pz-ring"></div>' + sparks +
+              '<div class="pz-medal tier-' + tier.key + '"><i class="fa fa-trophy"></i></div></div>' +
+              '<p class="pz-tier tier-' + tier.key + '">' + tier.name + '</p>' +
+              '<p class="pz-xp">+<span id="pzXpCount">0</span> XP</p>' +
+              '<div class="pz-stars">' + stars + '</div>' +
+              '<p class="pz-muted">Score ' + numberWithCommas(score) + ' &middot; ' + pz.moves + ' moves &middot; ' + elapsed + 's</p>' +
+              '<p class="pz-muted">Added to your XP &middot; next reward in <b id="pzNext">' + pzNextText() + '</b></p>' +
+              '<button class="pz-btn ghost" data-act="practice">Practice (no XP)</button></div>',
+            );
+            pzCountUp(document.getElementById("pzXpCount"), tier.xp);
+            logActivity("Daily Puzzle", tier.xp, "fa-puzzle-piece");
+          }, 450);
+        }
+        function initPuzzle() {
+          var card = document.getElementById("puzzle-card");
+          if (!card || card.dataset.ready) return;
+          card.dataset.ready = "1";
+          document.getElementById("pzBoard").addEventListener("click", function (e) {
+            var b = e.target.closest ? e.target.closest(".pz-tile") : null;
+            if (b && b.hasAttribute("data-i")) pzMove(Number(b.getAttribute("data-i")));
+          });
+          document.getElementById("pzOverlay").addEventListener("click", function (e) {
+            var b = e.target.closest ? e.target.closest("[data-act]") : null;
+            if (!b) return;
+            pzStart(b.getAttribute("data-act") === "practice");
+          });
+          pz.tiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+          pzShowStart();
+          window.setInterval(function () {
+            if (pz.phase === "play") {
+              pz.left--;
+              pzHud();
+              if (pz.left <= 0) pzFinish(false);
+            }
+            var nx = document.getElementById("pzNext");
+            if (nx) nx.textContent = pzNextText();
+            if (pz.phase === "idle" && pz.day !== pzToday()) pzShowStart();
+          }, 1000);
+        }
+
         // Accent colour per activity source (all from the :root palette)
         function toneFor(source) {
           if (/^Level \d+ Reward/.test(source)) return "purple";
           return (
             {
               "Lucky Box": "gold",
+              "Daily Puzzle": "green",
               "Bonus Mission": "gold",
               "Ad Watch": "blue",
               "Daily Task": "blue",
@@ -3567,6 +4407,9 @@
 
         function initGame(cfg) {
           activeConfig = cfg;
+
+          initPuzzle();
+          initInteractions();
 
           // Restore the saved Game Score
           var savedScore = parseInt(storage.get(SCORE_KEY), 10);
