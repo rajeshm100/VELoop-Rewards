@@ -1,0 +1,82 @@
+@import './tokens.css';
+@import './animations.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  scrollbar-color: var(--muted-purple) var(--bg-primary);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(0, 0, 82, 0.55), transparent 55%),
+    radial-gradient(ellipse at 90% 60%, rgba(128, 91, 135, 0.18), transparent 50%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* soft colour glows drifting behind the page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 35% at 15% 20%, rgba(128, 91, 135, 0.28), transparent 70%),
+    radial-gradient(35% 30% at 85% 30%, rgba(147, 202, 237, 0.14), transparent 70%),
+    radial-gradient(40% 35% at 60% 90%, rgba(244, 233, 140, 0.08), transparent 70%);
+  animation: pageDrift 26s ease-in-out infinite alternate;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(560px 560px at 20% 6%, rgba(244, 233, 140, calc(0.14 * var(--glow))), transparent 70%),
+    radial-gradient(520px 520px at 90% 60%, rgba(147, 202, 237, calc(0.17 * var(--glow))), transparent 70%),
+    radial-gradient(480px 480px at 50% 100%, rgba(128, 91, 135, calc(0.2 * var(--glow))), transparent 70%);
+  animation: orbPulse 6s ease-in-out infinite;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); }
+img { max-width: 100%; }
+::selection { background: var(--warm-yellow); color: var(--bg-primary); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--muted-purple); border-radius: 10px; border: 2px solid var(--bg-primary); }
+::-webkit-scrollbar-thumb:hover { background: var(--warm-yellow); }
+:focus-visible { outline: 2px solid var(--soft-blue); outline-offset: 3px; }
+
+/* set by scrollToSection() so the section you jumped to flashes */
+[data-flash='true'] { animation: flash 1.6s ease-out; }
+
+.visually-hidden-text {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  body::before, body::after { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

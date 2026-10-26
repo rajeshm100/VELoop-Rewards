@@ -1,0 +1,39 @@
+/* Design tokens. The colour palette is the original VELoop palette, unchanged. */
+:root {
+  --bg-primary: #161827;
+  --bg-secondary: #000052;
+  --text-primary: #ffffff;
+  --text-secondary: #d2af26;
+  --silver: #c0c0c0;
+  --soft-blue: #93caed;
+  --warm-yellow: #f4e98c;
+  --muted-purple: #805b87;
+  --subtle-green: #b7e9c1;
+  --danger-red: #ff6b6b;
+  --demo-orange: #ffaa00;
+
+  --font-main: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --radius: 12px;
+  --radius-card: 26px;
+
+  /* Glow dial: 0 = off, 0.6 = subtle, 1 = default, 1.4 = intense */
+  --glow: 1;
+  --glow-y: rgba(244, 233, 140, calc(0.5 * var(--glow)));
+  --glow-gold: rgba(210, 175, 38, calc(0.55 * var(--glow)));
+  --glow-b: rgba(147, 202, 237, calc(0.5 * var(--glow)));
+  --glow-g: rgba(183, 233, 193, calc(0.5 * var(--glow)));
+  --glow-p: rgba(128, 91, 135, calc(0.6 * var(--glow)));
+
+  /* Bootstrap variable overrides so Bootstrap uses our palette */
+  --bs-body-bg: var(--bg-primary);
+  --bs-body-color: var(--text-primary);
+  --bs-body-font-family: var(--font-main);
+  --bs-border-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --glow: 0.8;
+  }
+}

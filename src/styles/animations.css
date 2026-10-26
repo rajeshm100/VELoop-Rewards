@@ -1,0 +1,10 @@
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes orbPulse { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes pageDrift { to { transform: translate3d(2%, -2%, 0) scale(1.06); } }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(183, 233, 193, 0.7); } 100% { box-shadow: 0 0 0 10px rgba(183, 233, 193, 0); } }
+@keyframes flash {
+  0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+  25%, 60% { box-shadow: 0 0 0 3px var(--warm-yellow), 0 0 30px rgba(244, 233, 140, 0.55); }
+}
+@keyframes sheen { to { transform: translateX(100%); } }
+@keyframes pulseRing { 0%, 100% { box-shadow: 0 0 6px rgba(244, 233, 140, 0.25); } 50% { box-shadow: 0 0 24px rgba(244, 233, 140, 0.6); } }
