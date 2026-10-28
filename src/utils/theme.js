@@ -1,6 +1,6 @@
 // Colour themes. "classic" is the original look; "neon" follows the VELoop Rewards site.
 export const THEMES = ['classic', 'neon'];
-export const DEFAULT_THEME = 'classic';
+export const DEFAULT_THEME = 'neon';
 
 // Anything unknown (old value, typo, tampered storage) falls back to the default.
 export const normalizeTheme = (value) => (THEMES.includes(value) ? value : DEFAULT_THEME);
